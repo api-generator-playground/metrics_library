@@ -42,6 +42,7 @@ publishing {
             groupId = 'org.apigenerator.playground'
             artifactId = 'metrics_library'
             version = '1.0'
+            sourceCompatibility = '11'
 
             from components.java
         }
