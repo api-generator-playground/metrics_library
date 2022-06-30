@@ -37,7 +37,7 @@ public class MetricsController {
 
         List<String> metricsList = new ArrayList<>();
 
-        this.metrics.stream().forEach(m -> metricsList.add(m.getName()));
+        this.metrics.stream().forEach(m -> { metricsList.add("Detailed: " + m.getName()); metricsList.add("Generic: " + m.getName().replace("_", ".")); });
 
         return new ResponseEntity<>(metricsList, HttpStatus.OK);
     }
