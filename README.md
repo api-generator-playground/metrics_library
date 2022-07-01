@@ -38,3 +38,6 @@ dependencies {
 
 ### In your `pom.xml`
 ?
+
+[![](https://jitpack.io/v/api-generator-playground/metrics_library.svg)](https://jitpack.io/#api-generator-playground/metrics_library)
+
