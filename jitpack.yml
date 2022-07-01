@@ -2,6 +2,6 @@ before_install:
   - sdk install java 11.0.10-open
   - sdk use java 11.0.10-open
   -
-install:
-  - echo "Running a custom install command"
-    - ./gradlew clean -Pgroup=com.github.api-generator-playground -Pversion=main-SNAPSHOT jar publishToMavenLocal
+#install:
+#  - echo "Running a custom install command"
+#  - ./gradlew clean jar publishToMavenLocal
