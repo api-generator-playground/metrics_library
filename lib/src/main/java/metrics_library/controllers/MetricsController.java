@@ -1,5 +1,6 @@
 package metrics_library.controllers;
 
+import io.prometheus.client.Collector;
 import io.prometheus.client.CollectorRegistry;
 import metrics_library.entities.Metric;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,7 +85,11 @@ public class MetricsController {
     private void updateMetrics() {
         List<Metric> metrics = new ArrayList<>();
 
-        this.collectorRegistry.metricFamilySamples().asIterator().forEachRemaining(mfs -> metrics.add(new Metric(mfs)));
+        Enumeration<Collector.MetricFamilySamples> mfs = this.collectorRegistry.metricFamilySamples();
+        
+        while (mfs.hasMoreElements()) {
+            metrics.add(new Metric(mfs.nextElement()));
+        }
 
         this.metrics = metrics;
 
