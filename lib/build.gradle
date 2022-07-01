@@ -11,7 +11,6 @@ plugins {
     id 'java-library'
     id 'org.springframework.boot' version '2.7.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'maven-publish'
 }
 
 repositories {
@@ -39,16 +38,3 @@ dependencies {
     api 'org.springframework.boot:spring-boot-starter-actuator'
     api 'io.micrometer:micrometer-registry-prometheus'
 }
-
-//publishing {
-//    publications {
-//        maven(MavenPublication) {
-//            groupId = 'org.apigenerator.playground'
-//            artifactId = 'metrics_library'
-//            version = '1.0'
-//            sourceCompatibility = '1.8'
-
-//            from components.java
-//        }
-//    }
-//}
