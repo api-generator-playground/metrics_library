@@ -52,3 +52,9 @@ publishing {
         }
     }
 }
+
+task customFatJar(type: Jar) {
+    baseName = 'lib'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    with jar
+}
