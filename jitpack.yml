@@ -4,4 +4,4 @@ before_install:
   -
 install:
   - echo "Running a custom install command"
-  - ./gradlew clean -Pgroup=com.github.api-generator-playground -Pversion=main-a6d1b9f45a-1 customFatJar publishToMavenLocal
+  - ./gradlew clean -Pgroup=com.github.api-generator-playground -Pversion=main-a6d1b9f45a-1 jar publishToMavenLocal

@@ -40,6 +40,10 @@ dependencies {
     api 'io.micrometer:micrometer-registry-prometheus'
 }
 
+jar {
+    classifier = ''
+}
+
 publishing {
     publications {
         maven(MavenPublication) {
@@ -51,10 +55,4 @@ publishing {
             from components.java
         }
     }
-}
-
-task customFatJar(type: Jar) {
-    baseName = 'lib'
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    with jar
 }
