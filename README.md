@@ -11,6 +11,30 @@ This project is a Java library builded with Gradle that encapsulate logic and de
 * io.micrometer:micrometer-registry-prometheus
 
 ## Usage
+
+### Usage with JitPack
+Publicated repository in JitPack:
+
+https://jitpack.io/#api-generator-playground/metrics_library
+
+Add this line in your repositories in `build.gradle`
+```groovy
+repositories {
+	//...
+	maven { url 'https://jitpack.io' }
+}
+``` 
+And add this implementation in your dependencies
+```groovy
+dependencies {
+    implementation 'com.github.api-generator-playground:metrics_library:1.0'
+}
+```
+
+---
+
+### Local Usage
+
 For easy sharing in your apps you can publish this project in your local Maven repositories through this command:
 ```bash
 gradle publishToMavenLocal
