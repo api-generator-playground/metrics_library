@@ -1,7 +1,7 @@
-package controllers;
+package metrics_library.controllers;
 
 import io.prometheus.client.CollectorRegistry;
-import entities.Metric;
+import metrics_library.entities.Metric;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.metrics.MetricsEndpoint;

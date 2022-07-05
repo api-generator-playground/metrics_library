@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=config.MetricsLibraryConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=metrics_library.MetricsLibraryConfiguration

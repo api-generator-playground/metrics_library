@@ -1,4 +1,4 @@
-package entities;
+package metrics_library.entities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
