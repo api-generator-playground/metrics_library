@@ -66,7 +66,7 @@ public class MetricsController {
             for (Sample sample : metric.samples) {
                 Map<String, Object> s = new HashMap<>();
                 s.put("name", sample.name);
-                for (int i = 0; i < sample.labelNames.size(); i++) { s.put("name", s.get("name").toString() + sample.labelValues.get(i).toString()); }
+                for (int i = 0; i < sample.labelNames.size(); i++) { s.put("name", s.get("name").toString() + " " + sample.labelValues.get(i).toString()); }
                 s.put("value", sample.value);
                 mapa.add(s);
             }
