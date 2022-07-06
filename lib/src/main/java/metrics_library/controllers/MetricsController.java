@@ -1,6 +1,9 @@
 package metrics_library.controllers;
 
+import io.prometheus.client.Collector;
 import io.prometheus.client.CollectorRegistry;
+import io.prometheus.client.Collector.MetricFamilySamples;
+import io.prometheus.client.Collector.MetricFamilySamples.Sample;
 import metrics_library.entities.Metric;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -47,6 +52,27 @@ public class MetricsController {
         this.updateMetrics();
 
         return new ResponseEntity<>(this.metrics.stream().filter(metric -> metric.getName().equals(name)).collect(Collectors.toList()), HttpStatus.OK);
+    }
+
+    @GetMapping("/diferenciado")
+    public ResponseEntity<?> getDetailedMetricDif() {
+        List<Collector.MetricFamilySamples> metrics = new ArrayList<>();
+
+        this.collectorRegistry.metricFamilySamples().asIterator().forEachRemaining(mfs -> metrics.add(mfs));
+
+        List<Map<String, Object>> mapa = new ArrayList<>();
+
+        for (MetricFamilySamples metric : metrics) {
+            for (Sample sample : metric.samples) {
+                Map<String, Object> s = new HashMap<>();
+                s.put("name", sample.name);
+                for (int i = 0; i < sample.labelNames.size(); i++) { s.put("name", s.get("name").toString() + sample.labelValues.get(i).toString()); }
+                s.put("value", sample.value);
+                mapa.add(s);
+            }
+        }
+
+        return new ResponseEntity<>(mapa, HttpStatus.OK);
     }
 
     @GetMapping("/detailed")
