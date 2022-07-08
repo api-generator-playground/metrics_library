@@ -5,31 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import io.prometheus.client.Collector;
 import io.prometheus.client.Collector.MetricFamilySamples.Sample;
 
-@Entity
-@Table(name = "metric")
 public class Metric {
     
-    @Id
+
     private String name;
 
-    @Column
+
     private String metricType;
 
-    @Column
+    
     private String baseUnit;
 
-    @Column
+    
     private String description;
 
-    @Column
+
     private List<Map<String, Object>> samples;
 
     public Metric(String name, String metricType, String description, List<Map<String, Object>> samples) {
