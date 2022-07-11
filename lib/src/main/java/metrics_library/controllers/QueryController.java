@@ -1,6 +1,9 @@
 package metrics_library.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Parameter;
+import metrics_library.entities.PrometheusApiResponses;
 import metrics_library.entities.QueryTypeEnum;
 import metrics_library.services.PromQLService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,9 @@ public class QueryController {
     @GetMapping("/metrics")
     public ResponseEntity<?> getAllMetricsFromPrometheusAPI() {
         List<String> metricsResponse = promQLService.getAllMetrics();
+        if (metricsResponse == null) {
+            return new ResponseEntity<>("No response from remote host", HttpStatus.SERVICE_UNAVAILABLE);
+        }
         return new ResponseEntity<>(metricsResponse, HttpStatus.OK);
     }
 
@@ -50,6 +56,17 @@ public class QueryController {
                 metricName,
                 start.toInstant(ZoneOffset.UTC).getEpochSecond(),
                 end.toInstant(ZoneOffset.UTC).getEpochSecond(), step);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        if (response.equals("")) {
+            return new ResponseEntity<>("No response from remote host", HttpStatus.SERVICE_UNAVAILABLE);
+        }
+
+        PrometheusApiResponses.MatrixResponse matrixResponse = new PrometheusApiResponses.MatrixResponse();
+        try {
+            matrixResponse = new ObjectMapper().readValue(response, PrometheusApiResponses.MatrixResponse.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new ResponseEntity<>(matrixResponse, HttpStatus.OK);
     }
 }
