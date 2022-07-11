@@ -55,7 +55,7 @@ public class PromQLService {
             response = readResponseFromConnection(conn);
             conn.disconnect();
         } catch (IOException e) {
-            response = "No response from remote host";
+            e.printStackTrace();
         }
         return response;
     }
