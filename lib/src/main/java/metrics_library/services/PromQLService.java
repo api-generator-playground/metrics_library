@@ -1,5 +1,9 @@
 package metrics_library.services;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import metrics_library.entities.PrometheusApiResponses;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Locale;
 
 @Service
@@ -19,7 +24,7 @@ public class PromQLService {
     private String prometheusHost;
 
     public String getResponseFromQuery(String queryType, String metricName, long start, long end, Integer step) {
-        String hostQueryPath = String.format(Locale.ROOT, "%s/api/v1/%s?query=%s&start=%d&end=df&step=%d",
+        String hostQueryPath = String.format(Locale.ROOT, "%s/api/v1/%s?query=%s&start=%d&end=%d&step=%d",
                                     prometheusHost, queryType, metricName, start, end, step);
         return getResponseFromPrometheusAPI(hostQueryPath);
     }
@@ -53,5 +58,18 @@ public class PromQLService {
             throw new RuntimeException(e);
         }
         return response;
+    }
+
+    public List<String> getAllMetrics() {
+        String hostQueryPath = String.format(Locale.ROOT, "%s/api/v1/label/__name__/values", prometheusHost);
+        String response = getResponseFromPrometheusAPI(hostQueryPath);
+        PrometheusApiResponses.LabelNameValuesResponse responseObject = new PrometheusApiResponses.LabelNameValuesResponse();
+        try {
+            responseObject = new ObjectMapper()
+                    .readValue(response, PrometheusApiResponses.LabelNameValuesResponse.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return responseObject.getData();
     }
 }

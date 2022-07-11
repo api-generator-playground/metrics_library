@@ -41,6 +41,7 @@ dependencies {
     api 'io.prometheus:simpleclient'
     api 'io.prometheus:simpleclient_httpserver'
     api 'io.prometheus:simpleclient_hotspot'
+    api 'org.springdoc:springdoc-openapi-ui:1.6.9'
 }
 
 jar {
